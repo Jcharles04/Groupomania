@@ -6,6 +6,12 @@ import React from 'react';
 export default function Header() {
 
 	const name = localStorage.getItem('name');
+	
+	function handleDeco(e) {
+        e.preventDefault();
+		localStorage.clear();
+		window.location.reload();
+    } 
 
     return (
         <header>
@@ -17,7 +23,7 @@ export default function Header() {
 						<li>
 							<a href='./mod/mod.php' className='link'>admins</a>
                         </li>	
-						<li><a href='./log/logout.php' className='link'>Déconnexion</a></li>
+						<li><button onClick={handleDeco}>Déconnexion</button></li>
 						<li><a href='./log/deleteUser.php' className='link'>Supprimer votre compte</a></li>
 					</ul>
 				</div>

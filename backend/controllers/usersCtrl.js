@@ -39,6 +39,7 @@ export async function login(req, res, next) {
 
             let userId = mail.id;
             let userName = mail.FirstName;
+            let admin = mail.Moderator;
 
             bcrypt.compare(pass, mail.PassWord)
             .then(valid => {
@@ -46,7 +47,7 @@ export async function login(req, res, next) {
                     return res.status(401).json({ error: 'Mot de passe incorrect !' });
                 }
                 const obj = {
-                    userId: userId, name: userName,
+                    userId: userId, name: userName, admin: admin,
                     access_token: jwt.sign(
                         { id: userId, isModerator: 1 }, //TODO: mettre le bon
                         'JWT_SECRET_TOKEN',

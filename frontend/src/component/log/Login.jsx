@@ -23,7 +23,7 @@ export default function Login({onLoggedIn}) {
                     onLoggedIn(json?.access_token);
                     localStorage.setItem('name', json?.name);
                     localStorage.setItem('id', json?.userId);
-
+                    localStorage.setItem('admin', json?.admin);
                 } else {
                     console.warn("onLoggedIn: %s, token: %s", onLoggedIn, json?.access_token);
                 }

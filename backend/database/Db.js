@@ -11,7 +11,7 @@ export async function init() {
     if (sequelize)
         return;
     try {
-        sequelize = new Sequelize('groupomania', 'groupomania', 'gpM@n1a', {
+        sequelize = new Sequelize('groupomania', 'root', 'root', {
             dialect: "mysql",
             host: "localhost"
         });
@@ -103,6 +103,86 @@ export async function createCom(user_id, text, image) {
             {
                 replacements: [user_id, text, image],
                 type: QueryTypes.INSERT,
+                transaction: t
+            });
+        await t.commit();
+        return res[0];
+
+    } catch (error) {
+        await t.rollback();
+        throw error;
+  
+    }
+}
+
+export async function replyCom(user_id, text, replyTo_id) {
+    const t = await sequelize.transaction();
+
+    try {
+        let res = await sequelize.query("INSERT INTO comments(User_id, Text, ReplyTo_id)  VALUES(?, ?, ?)",
+            {
+                replacements: [user_id, text, replyTo_id],
+                type: QueryTypes.INSERT,
+                transaction: t
+            });
+        await t.commit();
+        return res[0];
+
+    } catch (error) {
+        await t.rollback();
+        throw error;
+  
+    }
+}
+
+export async function deleteCom(cId) {
+    const t = await sequelize.transaction();
+
+    try {
+        let res = await sequelize.query("UPDATE comments SET Suppression = NOW()  WHERE id = ?",
+            {
+                replacements: [cId],
+                type: QueryTypes.UPDATE,
+                transaction: t
+            });
+        await t.commit();
+        return res[0];
+
+    } catch (error) {
+        await t.rollback();
+        throw error;
+  
+    }
+}
+
+export async function likeCom(cId, userId) {
+    const t = await sequelize.transaction();
+
+    try {
+        let res = await sequelize.query("INSERT INTO like_number(ComId, UserId) VALUES(?,?)",
+            {
+                replacements: [cId, userId],
+                type: QueryTypes.UPDATE,
+                transaction: t
+            });
+        await t.commit();
+        return res[0];
+
+    } catch (error) {
+        await t.rollback();
+        throw error;
+  
+    }
+}
+
+export async function dropLike(cId, userId) {
+    const t = await sequelize.transaction();
+
+    try {
+        let res = await sequelize.query("DELETE FROM like_number WHERE comId = ? AND userId = ?" ,
+            {
+                replacements: [cId, userId],
+                type: QueryTypes.UPDATE,
                 transaction: t
             });
         await t.commit();
