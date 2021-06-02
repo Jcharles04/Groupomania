@@ -4,10 +4,10 @@ export default function fetchAuth(url, options) {
 
 function updateOptions(options) {
     const update =  {...options} ;
-    if (localStorage.access_token) {
+    if (sessionStorage.access_token) {
         update.headers = {
             ...update.headers,
-            Authorization: `Bearer ${localStorage.access_token}`,
+            Authorization: `Bearer ${sessionStorage.access_token}`,
         };
     }
     return update;

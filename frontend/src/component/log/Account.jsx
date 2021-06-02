@@ -7,32 +7,32 @@ export default function Account ({onAccountLoggedIn}) {
     const [page, setPage] = useState('Login');
 
     let content = null;
+    console.log("Choose Login/signin");
     if (page === 'Login') {
-        content = <Login onLoggedIn={handleLoggedIn} />
+        console.log("Chose Login");
+        content = <Login onLoggedIn={handleLoggedIn} onSwitch={onSwitch}/>
     } else {
-        content = <Signin/>
+        console.log("Chose Signin");
+        content = <Signin onSwitch={onSwitch}/>
     }
 
-    return (
-        <>
-            <ButtonGroup currentPage={page} onClick={setPage}/> 
-            {content}
-        </>
-    )
-    
     function handleLoggedIn(token) {
         if (onAccountLoggedIn) {
             onAccountLoggedIn(token);
         }
     }
-}
 
-function ButtonGroup({onClick}) {
+    function onSwitch() {
+        if(page === 'Login'){
+            setPage('Signin');
+        } else {
+            setPage('Login')
+        }
+    }
 
     return (
-        <>
-            <button type='button' onClick={() => onClick('Login')}>Connexion</button>
-            <button type='button' onClick={() => onClick('Signin')}>Inscription</button>
+        <> 
+            {content}
         </>
     )
 }

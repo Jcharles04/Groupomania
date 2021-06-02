@@ -4,15 +4,25 @@ import Account from './component/log/Account';
 import useToken from './component/token/Token';
 import DashBoard from './component/dashboard/DashBoard';
 
-import './style.css';
+//import './style.css';
 
 export default function App() {
 
     const {token, setToken } = useToken();
 
     console.log("Read token: ", token);
+    let display;
+    if (token) {
+        console.log('Chose DashBoard');
+        display = <DashBoard/>;
+    } else {
+        console.log('Chose Account');
+        display = <Account onAccountLoggedIn={handleAccountLoggedIn}/>;
+    }
     return (
-        token ? <DashBoard/> : <Account onAccountLoggedIn={handleAccountLoggedIn}/>
+        <>
+            {display}
+        </>
     )
 
     function handleAccountLoggedIn(token) {

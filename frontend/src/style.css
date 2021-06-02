@@ -8,7 +8,8 @@
 /* -------------------------------------------------------------------------- */
 
 body {
-	background-color: rgb(201, 220, 221);
+	background-color: rgb(255, 255, 255);
+
 }
 
 header {
@@ -49,10 +50,9 @@ header a {
 
 .container {
 	display: flex;
+	margin :0 3% 20px 3% ;
 	flex-direction: column;
-	margin: 0 5% 20px 5%;
 	min-height: 75px ;
-	height: auto;
 	background-color: rgba(35,148,188,255);
 	border-radius: 5px;
 }
