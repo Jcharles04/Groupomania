@@ -1,18 +1,10 @@
 import {React, useState , useRef, useEffect} from 'react';
 import CardBodyShow from './CardBodyShow';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../../UseStyles';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme) => ({
-  
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    
-  }));
 
 export default function CardBody({id, Text, ImgUrl, editing, onModify, ReplyTo_id, level}) {
     const classes = useStyles();

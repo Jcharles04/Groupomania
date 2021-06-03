@@ -1,18 +1,20 @@
 import {React, useState} from 'react'; 
 import Header from './Header';
 import Wall from './Wall';
-import Zadmin from '../dashboard/admin/Zadmin';
+import Admin from '../dashboard/admin/Admin';
+
 // import fetchAuth from '../../auth/authUtil';
 
 export default function DashBoard() {
 
-    const [admin, setAdmin] = useState(false);
+    
+    const [isAdmin, setIsAdmin] = useState(false);
 
     function handleAdmin() {
-        if(admin === false){
-            setAdmin(true);
+        if(isAdmin === false){
+            setIsAdmin(true);
         } else {
-            setAdmin(false);
+            setIsAdmin(false);
         }
     }
 
@@ -46,7 +48,7 @@ export default function DashBoard() {
     return (
         <div>
             <Header onAdmin={handleAdmin}/>
-            {admin  ? <Zadmin/> 
+            {isAdmin  ? <Admin/> 
                     : <Wall/>
             }  
         </div>

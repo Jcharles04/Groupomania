@@ -1,6 +1,6 @@
 import {React, useState} from "react";
 import fetchAuth from '../../../auth/authUtil';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../UseStyles';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
@@ -13,14 +13,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import BuildIcon from '@material-ui/icons/Build';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const useStyles = makeStyles((theme) => ({
-    serv: {
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-        display: 'block',
-        },
-    },
-}));
+
 
 
 export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, FirstName, Service, User_id, onModClicked, onModify, onDeleteCom}) {

@@ -3,11 +3,12 @@ import React from 'react';
 import Account from './component/log/Account';
 import useToken from './component/token/Token';
 import DashBoard from './component/dashboard/DashBoard';
-
-//import './style.css';
+import { useStyles } from './component/dashboard/UseStyles';
+import './style.css';
 
 export default function App() {
 
+    const classes = useStyles();
     const {token, setToken } = useToken();
 
     console.log("Read token: ", token);
@@ -20,9 +21,9 @@ export default function App() {
         display = <Account onAccountLoggedIn={handleAccountLoggedIn}/>;
     }
     return (
-        <>
+        <div className={classes.main}>
             {display}
-        </>
+        </div>
     )
 
     function handleAccountLoggedIn(token) {

@@ -1,8 +1,5 @@
 import {React, useState} from 'react';
-import fetchAuth from '../../../auth/authUtil';
-//import { makeStyles } from '@material-ui/core/styles';
-import CardContent from '@material-ui/core/CardContent';
-//import Typography from '@material-ui/core/Typography';
+import fetchAuth from '../../../../auth/authUtil'
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 
@@ -47,7 +44,7 @@ export default function CardBodyShow({Text, ImgUrl, id, ReplyTo_id, onModifyCom,
     }
 
     return (
-        <CardContent>
+        <div>
             <form className='inVisible' onSubmit={handleMod}  encType="multipart/form-data">
                 <div className='buttonMod'>
                 <Grid container direction="row" alignItems="center"  justify="space-around"> 
@@ -70,7 +67,6 @@ export default function CardBodyShow({Text, ImgUrl, id, ReplyTo_id, onModifyCom,
                                 onChange={(event) => {
                                     setFile(event.target.files[0]);
                                     onImageChanged(event.target.files[0]);
-                                    
                                 }}
                             />
                             </Button>
@@ -84,7 +80,7 @@ export default function CardBodyShow({Text, ImgUrl, id, ReplyTo_id, onModifyCom,
                 </Grid>
                 </div>
             </form>
-        </CardContent>
+        </div>
             
 
     )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './UseStyles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,51 +10,17 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import fetchAuth from '../../auth/authUtil';
 
 
-/* -------------------------------------------------------------------------- */
-/*                              Style Material Ui                             */
-/* -------------------------------------------------------------------------- */
-
-const useStyles = makeStyles((theme) => ({
-    grow: {
-        flexGrow: 1,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-    },
-    title: {
-        display: 'flex',
-    },
-    hello: {
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-        display: 'block',
-        },
-    },
-    inputRoot: {
-        color: 'inherit',
-    },
-    inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',  
-    },
-    sectionDesktop: {
-        display: 'flex',
-    }
-}));
-
 export default function Header({onAdmin}) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const name = sessionStorage.getItem('name');
-	const admin = sessionStorage.getItem('admin');
-    let toggleAdmin = null;
-    if (admin !== '1') {
-		toggleAdmin = false;
+	const isAdmin = sessionStorage.getItem('admin');
+
+    let toggleIsAdmin = null;
+    if (isAdmin !== '1') {
+		toggleIsAdmin = false;
 	} else {
-		toggleAdmin = true;
+		toggleIsAdmin = true;
 	}
 
     const isMenuOpen = Boolean(anchorEl);
@@ -80,7 +46,7 @@ export default function Header({onAdmin}) {
         open={isMenuOpen}
         onClose={handleMenuClose}
         >
-        {toggleAdmin
+        {toggleIsAdmin
             ?<MenuItem onClick={handleAdmin}>Admin</MenuItem>
             :null
         }
@@ -148,26 +114,26 @@ export default function Header({onAdmin}) {
         <div className={classes.grow}>
         <AppBar position="static">
             <Toolbar>
-            <Typography className={classes.title} variant="h6" noWrap>
-                Groupomania
-            </Typography>
-            <div className={classes.grow} />
-            <Typography className={classes.hello} variant="h6" noWrap>
-                Bonjour {name}
-            </Typography>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-                <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-                >
-                <AccountCircle />
-                </IconButton>
-            </div>
+                <Typography className={classes.title} variant="h5" noWrap>
+                    Groupomania
+                </Typography>
+                <div className={classes.grow}/>
+                <Typography className={classes.hello} variant="h5" noWrap>
+                    Bonjour {name}
+                </Typography>
+                <div className={classes.grow} />
+                <div className={classes.sectionDesktop}>
+                    <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                    >
+                    <AccountCircle />
+                    </IconButton>
+                </div>
             </Toolbar>
         </AppBar>
         {renderMenu}

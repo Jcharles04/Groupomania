@@ -9,7 +9,7 @@ export default function CardList({ reloadPage}) {
     const [data, setData] = useState([]);
     const reload = reloadPage ? true : false;
     const [isFetching, setIsFetching] = useState(false);
-    const [newComs, setNewComs] = useState(true);
+    const [hasNewComs, setHasNewComs] = useState(true);
 
     /* -------------------------------------------------------------------------- */
     /*                                GET ALL COMS                                */
@@ -25,7 +25,7 @@ export default function CardList({ reloadPage}) {
                 .then(function(myJson) {
                     console.log(myJson);
                     setData(myJson)
-                    setNewComs(true)
+                    setHasNewComs(true)
                 })
                 .catch(error => {                                                  
                     alert('Error API!');
@@ -53,7 +53,6 @@ export default function CardList({ reloadPage}) {
         const dataCopy  = [...data];
         dataCopy[comIndex] = newCom;
         setData(dataCopy)
-        
     }
 
     function handleDeleteCom(cId){
@@ -80,12 +79,12 @@ export default function CardList({ reloadPage}) {
 
     function handleScroll() {
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-        setIsFetching(newComs);
+        setIsFetching(hasNewComs);
     }
 
-    const fetchMoreComs = useCallback(() => {
+    const handleFetchMoreComs = useCallback(() => {
         try {
-            if(newComs === true) {
+            if(hasNewComs === true) {
                 let container = document.getElementById('container');
                 let lastCom = container.lastChild;
                 let result = lastCom.id;
@@ -101,7 +100,7 @@ export default function CardList({ reloadPage}) {
                             const newData = [...data, ...myJson]
                             setData(newData);
                         } else {
-                            setNewComs(false);
+                            setHasNewComs(false);
                         }
                     })
                     .catch(error => {                                                  
@@ -113,13 +112,13 @@ export default function CardList({ reloadPage}) {
             alert(error);
             console.log(error);
         }
-    }, [data, newComs]);
+    }, [data, hasNewComs]);
 
     useEffect(() => {
         if (!isFetching) return;
-        fetchMoreComs();
+        handleFetchMoreComs();
         setIsFetching(false);
-    }, [isFetching, fetchMoreComs]);
+    }, [isFetching, handleFetchMoreComs]);
 
     return (
         <div className='container' id='container' style={{justifyContent:'center'}}>

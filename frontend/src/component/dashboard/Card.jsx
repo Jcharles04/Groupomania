@@ -1,30 +1,12 @@
 import {React, useState} from 'react'; 
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './UseStyles';
 import Card from '@material-ui/core/Card';
 import Collapse from '@material-ui/core/Collapse';
-import CardHead from "./cardComponentz/CardHeader";
-import CardBody from "./cardComponentz/CardBody";
-import CardFooter from "./cardComponentz/CardFooter";
-import CardReplies from "./cardComponentz/CardReplies";
+import CardHead from "./cardComponent/CardHeader";
+import CardBody from "./cardComponent/cardBody/CardBody";
+import CardFooter from "./cardComponent/CardFooter";
+import CardReplies from "./cardComponent/CardReplies";
 
-
-const useStyles = makeStyles(() => ({
-    root: {
-        maxWidth: 1000,
-        margin: '0 auto 25px auto',
-    },
-    MainCard: {
-        borderBottom: '1px solid grey',
-    },
-    media: {
-        height: 0,
-        //paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-    },
-}));
 
 export default function CardComponant({
     id,
@@ -64,18 +46,18 @@ export default function CardComponant({
             Reload(json)
         )
         setEditing(false);
-    }
+    };
 
     function handleDeleteCom(cId) {
         if(DeleteCom) (
             DeleteCom(cId)
         )
-    }
+    };
 
  
     function handleShow() {
         setEditing(!editing);
-    }
+    };
 
     return (
         <Card className={`${classes.root}  ${"wrapper card level-"+level}`}  key={id} id={'comment-'+id} >

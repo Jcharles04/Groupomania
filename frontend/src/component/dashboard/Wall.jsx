@@ -1,5 +1,5 @@
 import {React , useState} from 'react';
-import PostCard from './PostCardz';
+import PostCard from './PostCard';
 import CardList from './CardList';
 
 export default function Wall() {

@@ -1,34 +1,26 @@
 import {React, useState} from 'react';
 import CardComponant from '../Card';
+import { useStyles } from '../UseStyles';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import fetchAuth from '../../../auth/authUtil';
 import CardContent from '@material-ui/core/CardContent';
+import SendIcon from '@material-ui/icons/Send';
 
 
 export default function CardReplies({
     id,
-    checkedByAdmin, 
-    CreationDate,
-    FirstName,
-    ImgUrl,
-    likes,
-    myLike,
-    nbOfResponse,
     replies,
     ReplyTo_id,
-    Service,
-    Text,
-    User_id,
     onModify,
     onDeleteCom,
-    Reload,
     level = +1
     }){
 
+    const classes = useStyles();
     const [reply, setReply] = useState('');
     const [loading, setLoading] = useState(false);
-
+        
     if(replies.length === 0) {
         replies = false
     }
@@ -76,9 +68,9 @@ export default function CardReplies({
             {!ReplyTo_id
                 ?<div>
                     <form onSubmit={handleResponse} encType="multipart/form-data">
-                        <Input type="reply" id="reply" name="reply"  minLength="0" maxLength="250" size="25" placeholder="Envie de réagir ?" value={reply} onChange={e => setReply(e.target.value)} required/>
+                        <Input name="reply" className={classes.reply}  minLength="0" maxLength="250" size="25" placeholder="Envie de réagir ?" value={reply} onChange={e => setReply(e.target.value)} required/>
                         <input id="comId" name="comId" type="hidden" value={id}/>
-                        <Button type="submit" id="submit" className='button' value="Envoyer"  disabled={loading}>Envoyez</Button>
+                        <Button type="submit" id="submit" className='button' value="Envoyer" variant="contained" color='primary' disabled={loading}><SendIcon/></Button>
                     </form>
                 </div>
                 :null
