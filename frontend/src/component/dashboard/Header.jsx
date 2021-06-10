@@ -1,8 +1,10 @@
-import React from 'react';
+import { React, useState, useRef } from 'react';
 import { useStyles } from './UseStyles';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -12,9 +14,10 @@ import fetchAuth from '../../auth/authUtil';
 
 export default function Header({onAdmin}) {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const name = sessionStorage.getItem('name');
 	const isAdmin = sessionStorage.getItem('admin');
+    const inputEl = useRef(null);
 
     let toggleIsAdmin = null;
     if (isAdmin !== '1') {
@@ -26,7 +29,8 @@ export default function Header({onAdmin}) {
     const isMenuOpen = Boolean(anchorEl);
 
     const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
+        inputEl.current.focus();
+        setAnchorEl(event.currentTarget); 
     };
 
     const handleMenuClose = () => {
@@ -34,10 +38,13 @@ export default function Header({onAdmin}) {
  
     };
 
+    const handleRefresh = () => {
+        window.location.reload()
+    }
 
-    const menuId = 'primary-search-account-menu';
+    const menuId = ('primary-search-account-menu') ;
     const renderMenu = (
-        <Menu
+        <Menu 
         anchorEl={anchorEl}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         id={menuId}
@@ -46,12 +53,12 @@ export default function Header({onAdmin}) {
         open={isMenuOpen}
         onClose={handleMenuClose}
         >
-        {toggleIsAdmin
-            ?<MenuItem onClick={handleAdmin}>Admin</MenuItem>
-            :null
-        }
-        <MenuItem onClick={handleDeco}>Déconnexion</MenuItem>
-        <MenuItem onClick={handleSupAccount}>Supprimer le compte</MenuItem>
+            {toggleIsAdmin
+                ?<MenuItem onClick={handleAdmin}>Admin</MenuItem>
+                :null
+            }
+            <MenuItem onClick={handleDeco}>Déconnexion</MenuItem>
+            <MenuItem onClick={handleSupAccount}>Supprimer le compte</MenuItem>
         </Menu>
     );
     
@@ -112,31 +119,34 @@ export default function Header({onAdmin}) {
 
     return (
         <div className={classes.grow}>
-        <AppBar position="static">
-            <Toolbar>
-                <Typography className={classes.title} variant="h5" noWrap>
-                    Groupomania
-                </Typography>
-                <div className={classes.grow}/>
-                <Typography className={classes.hello} variant="h5" noWrap>
-                    Bonjour {name}
-                </Typography>
-                <div className={classes.grow} />
-                <div className={classes.sectionDesktop}>
-                    <IconButton
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
-                    color="inherit"
-                    >
-                    <AccountCircle />
-                    </IconButton>
-                </div>
-            </Toolbar>
-        </AppBar>
-        {renderMenu}
+            <AppBar position="static">
+                <Toolbar>
+                    <Button onClick={handleRefresh} variant="contained" color="primary" disableElevation>
+                        <Typography className={classes.title} variant="h5" noWrap>
+                        Groupomania
+                        </Typography>
+                    </Button> 
+                    <div className={classes.grow}/>
+                    <Typography className={classes.hello} variant="h5" noWrap>
+                        Bonjour {name}
+                    </Typography>
+                    <div className={classes.grow} />
+                    <div className={classes.sectionDesktop}>
+                        <IconButton
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls={menuId}
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuOpen}
+                        color="inherit"
+                        ref={inputEl}
+                        >
+                        <AccountCircle />
+                        </IconButton>
+                    </div>
+                </Toolbar>
+            </AppBar>
+            {renderMenu}
         </div>
     );
 }

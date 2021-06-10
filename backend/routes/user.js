@@ -16,7 +16,7 @@ export function route() {
     router.post("/sup", authAdmin, userCtrl.modifyUser);
     router.post("/back", authAdmin, userCtrl.backUser);
     router.get("/all", authAdmin, userCtrl.getAllUsers);
-    router.get("/modDate", authAdmin, userCtrl.modDate);
+    router.get("/modDate", authAdmin, userCtrl.moderationDate);
     
     return router;
 }

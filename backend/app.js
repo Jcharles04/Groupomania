@@ -6,7 +6,6 @@ import path from 'path';
 import rateLimit from 'express-rate-limit';
 import * as userRoutes from './routes/user.js';
 import * as comRoutes from './routes/com.js';
-
 import * as db from './database/Db.js';
 
 dotenv.config();

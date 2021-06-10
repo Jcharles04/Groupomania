@@ -155,7 +155,7 @@ export async function backUser(uId) {
     }
 }
 
-export async function modDate() {
+export async function moderationDate() {
     const t = await sequelize.transaction();
 
     try {

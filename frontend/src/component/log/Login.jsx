@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../dashboard/UseStyles';
 import Container from '@material-ui/core/Container';
 
 
@@ -13,36 +13,19 @@ import Container from '@material-ui/core/Container';
 /*                              Style Material Ui                             */
 /* -------------------------------------------------------------------------- */
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
 
 export default function Login({onLoggedIn , onSwitch}) {
     const classes = useStyles();
     const [mail, setMail] = useState ('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         console.log("Login handleSubmit");
         e.preventDefault();
         setLoading(true);
+        setError('');
         try {
             const response = await fetch('http://localhost:8080/user/login', {
                 method: 'POST',
@@ -68,7 +51,7 @@ export default function Login({onLoggedIn , onSwitch}) {
                 }
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);
-                alert('Utilisateur ou mot de pass faux')
+                setError('Utilisateur ou mot de passe faux')
             }
         } catch (error) {
             alert(error);
@@ -86,11 +69,14 @@ export default function Login({onLoggedIn , onSwitch}) {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <div className={classes.paper}>
+            <div className={classes.bg}>
                 <Avatar className={classes.avatar}>
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h4">
                     Connexion
+                </Typography>
+                <Typography component="h5" variant="h6" color="secondary">
+                    {error}
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
@@ -132,7 +118,7 @@ export default function Login({onLoggedIn , onSwitch}) {
                     </Button>
                     <Grid container>
                         <Grid item>
-                        <Button onClick={handleOnClick} variant="body2">
+                        <Button onClick={handleOnClick} >
                             {"Pas encore de compte ? Inscrivez vous"}
                         </Button>
                         </Grid>

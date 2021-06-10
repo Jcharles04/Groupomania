@@ -54,7 +54,6 @@ export default function CardComponant({
         )
     };
 
- 
     function handleShow() {
         setEditing(!editing);
     };

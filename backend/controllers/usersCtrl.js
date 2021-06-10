@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import * as db from '../database/Db.js';
 import jwt from 'jsonwebtoken';
-//const MaskData = require('maskdata');
+import MaskData from'maskdata';
 
 export function signup(req, res, next) {
     try {
@@ -20,7 +20,7 @@ export function signup(req, res, next) {
                 )
                 res.status(201).json({ message: 'Utilisateur créé !' })
                 } else {
-                    return res.status(401).json({ error: 'Email non disponible !' });
+                    return res.status(401).json({ error: 'Email déjà utilisé !' });
                 }
             })
             .catch(
@@ -33,9 +33,9 @@ export function signup(req, res, next) {
             console.log(user)
         })
         .catch(error => res.status(500).json({ error }));
-    } catch {
-        res.status(500).json({ error });
+    } catch(error) {
         console.error(error);
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -62,7 +62,7 @@ export async function login(req, res, next) {
                 const obj = {
                     userId: userId, name: userName, admin: admin,
                     access_token: jwt.sign(
-                        { id: userId, isModerator: admin }, //TODO: mettre le bon
+                        { id: userId, isModerator: admin }, //TODO: mettre le bon .env
                         'JWT_SECRET_TOKEN',
                         { expiresIn: '24h' }
                 )};
@@ -85,8 +85,9 @@ export async function login(req, res, next) {
 export function ImLog(req, res, next) {
     try {
         res.status(200).json({message: 'Utilisateur valide'});
-    } catch {
-        res.status(500).json({ error });
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
     }
     console.log(res); 
 };
@@ -95,8 +96,9 @@ export function ImLog(req, res, next) {
 export function ImAdmin(req, res, next) {
     try {
         res.status(200).json({message: 'Utilisateur valide'});
-    } catch {
-        res.status(500).json({ error });
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
     }
     console.log(res); 
 };
@@ -112,8 +114,7 @@ export function deleteUser(req, res, next) {
         db.deleteUser(userId);
 
         res.status(201).json({ message: 'Utilisateur supprimé' });
-    } catch (error) {
-
+    } catch(error) {
         console.error(error);
         res.status(500).json({ error: error.message });
     }
@@ -124,20 +125,33 @@ export function deleteUser(req, res, next) {
 /*                                    ADMIN                                   */
 /* -------------------------------------------------------------------------- */
 
-export function getAllUsers(req, res, next) {
+export async function getAllUsers(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
     const admin = decodedToken.isModerator;
+    const emailMask2Options = {
+        maskWith: "*", 
+        unmaskedStartCharactersBeforeAt: 1,
+        unmaskedEndCharactersAfterAt: 2,
+        maskAtTheRate: false
+    };
 
     if(admin){
         try {
-            db.getAllUsers()
-            
-            .then(users=> res.status(200).json(users))
-            .catch(error => res.status(400).json({ error }))
-
-        } catch {
-            res.status(500).json({ error });
+            const users = await db.getAllUsers()
+            let n = 0;
+            for (const mail of users) {
+                let mail = (users[n].Mail);
+                let user = users[n]
+                const maskedEmail = MaskData.maskEmail2(mail, emailMask2Options);
+                user.Mail = maskedEmail
+                console.log(user)
+                n++
+            }
+            res.status(200).json(users)
+        } catch(error) {
+            console.error(error);
+            res.status(500).json({ error: error.message });
         }
         console.log(res);
     } else {
@@ -158,7 +172,7 @@ export function modifyUser(req, res, next) {
             
             res.status(201).json({ message: 'Utilisateur supprimé' });
 
-        } catch {
+        } catch(error) {
             console.error(error);
             res.status(500).json({ error: error.message });
         }
@@ -182,7 +196,7 @@ export function backUser(req, res, next) {
             
             res.status(201).json({ message: 'Utilisateur modifié' });
 
-        } catch {
+        } catch(error) {
             console.error(error);
             res.status(500).json({ error: error.message });
         }
@@ -192,20 +206,21 @@ export function backUser(req, res, next) {
     }
 }
 
-export function modDate(req, res, next) {
+export function moderationDate(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
     const admin = decodedToken.isModerator;
 
     if(admin){
         try {
-            db.modDate()
+            db.moderationDate()
             
             .then(user=> res.status(200).json(user))
             .catch(error => res.status(400).json({ error }))
 
-        } catch {
-            res.status(500).json({ error });
+        } catch(error) {
+            console.error(error);
+            res.status(500).json({ error: error.message });
         }
         console.log(res);
     } else {

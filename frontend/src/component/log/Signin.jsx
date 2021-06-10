@@ -5,32 +5,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../dashboard/UseStyles';
 import Container from '@material-ui/core/Container';
+import FormHelperText from '@material-ui/core/FormHelperText';
+
 
 /* -------------------------------------------------------------------------- */
 /*                              Style Material Ui                             */
 /* -------------------------------------------------------------------------- */
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
-}));
 
 export default function Signin({onSwitch}) {
     const classes = useStyles();
@@ -40,10 +23,12 @@ export default function Signin({onSwitch}) {
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setError('');
         try {
             const response = await fetch('http://localhost:8080/user/signin', {
                 method: 'POST',
@@ -60,6 +45,7 @@ export default function Signin({onSwitch}) {
                 //return; //Quit function to avoid changing state when <Login> isn't shown anymore
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);
+                setError('Mail déjà utilisé ou Mot de passe incorrect (8 à 15 caractères, au moins 1 chiffre, au moins 1 caractère spécial)')
             }
         } catch (error) {
             alert(error);
@@ -75,11 +61,14 @@ export default function Signin({onSwitch}) {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-            <div className={classes.paper}>
+            <div className={classes.bg}>
                 <Avatar className={classes.avatar}>
                 </Avatar>
-                <Typography component="h1" variant="h5">
+                <Typography component="h1" variant="h4">
                     Inscription
+                </Typography>
+                <Typography component="h5" variant="h6" color="secondary">
+                    {error}
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmit} >
                     <Grid container spacing={2}>
@@ -136,6 +125,7 @@ export default function Signin({onSwitch}) {
                             value={mail} 
                             onChange={e => setMail(e.target.value)}
                         />
+                        <FormHelperText>Votre Email doit être unique</FormHelperText>
                         </Grid>
                         <Grid item xs={12}>
                         <TextField
@@ -150,6 +140,7 @@ export default function Signin({onSwitch}) {
                             value={password} 
                             onChange={e => setPassword(e.target.value)}
                         />
+                        <FormHelperText>8 à 15 caractères, 1 chiffre, 1 caractère spécial</FormHelperText>
                         </Grid>
                     </Grid>
                     <Button
@@ -164,8 +155,8 @@ export default function Signin({onSwitch}) {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                        <Button onClick={handleonClick} variant="body2">
-                            Déjà un compte ? Connectez-vous
+                        <Button onClick={handleonClick}>
+                            {"Déjà un compte ? Connectez-vous"}
                         </Button>
                         </Grid>
                     </Grid>
