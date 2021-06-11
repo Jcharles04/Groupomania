@@ -1,6 +1,6 @@
 import {React, useState} from 'react';
 import CardComponant from '../Card';
-import { useStyles } from '../UseStyles';
+import { useStyles } from '../../UseStyles';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import fetchAuth from '../../../auth/authUtil';
@@ -22,8 +22,8 @@ export default function CardReplies({
     const [loading, setLoading] = useState(false);
         
     if(replies.length === 0) {
-        replies = false
-    }
+        replies = false;
+    };
 
     const handleResponse = async (e) => {
         e.preventDefault();
@@ -51,17 +51,17 @@ export default function CardReplies({
             console.log(error);
         }
         setLoading(false);
-    }
+    };
 
     const handleReload = function(json) {
         if (onModify)
             onModify(json);
-    }
+    };
 
     const handleDeleteCom = function(cId) {
         if (onDeleteCom)
             onDeleteCom(cId);
-    }
+    };
 
     return(
         <CardContent>
@@ -112,5 +112,5 @@ export default function CardReplies({
                 }   
             </div>               
         </CardContent>
-    )
+    );
 }

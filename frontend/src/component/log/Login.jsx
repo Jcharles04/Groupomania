@@ -5,7 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { useStyles } from '../dashboard/UseStyles';
+import { useStyles } from '../UseStyles';
 import Container from '@material-ui/core/Container';
 
 
@@ -51,25 +51,26 @@ export default function Login({onLoggedIn , onSwitch}) {
                 }
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);
-                setError('Utilisateur ou mot de passe faux')
+                setError('Utilisateur ou mot de passe faux');
             }
         } catch (error) {
             alert(error);
             console.log(error);
         }
         setLoading(false);
-    }
+    };
 
     function handleOnClick() {
         onSwitch();
-    }
+    };
     
     console.log("Login render");
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="sm">
             <CssBaseline />
             <div className={classes.bg}>
+
                 <Avatar className={classes.avatar}>
                 </Avatar>
                 <Typography component="h1" variant="h4">
@@ -78,6 +79,7 @@ export default function Login({onLoggedIn , onSwitch}) {
                 <Typography component="h5" variant="h6" color="secondary">
                     {error}
                 </Typography>
+
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <TextField
                         variant="outlined"
@@ -105,6 +107,7 @@ export default function Login({onLoggedIn , onSwitch}) {
                         value={password} 
                         onChange={e => setPassword(e.target.value)}
                     />
+
                     <Button
                         type="submit"
                         fullWidth
@@ -118,11 +121,12 @@ export default function Login({onLoggedIn , onSwitch}) {
                     </Button>
                     <Grid container>
                         <Grid item>
-                        <Button onClick={handleOnClick} >
-                            {"Pas encore de compte ? Inscrivez vous"}
-                        </Button>
+                            <Button onClick={handleOnClick} >
+                                {"Pas encore de compte ? Inscrivez vous"}
+                            </Button>
                         </Grid>
                     </Grid>
+
                 </form>
             </div>
         </Container>

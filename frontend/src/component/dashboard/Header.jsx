@@ -1,5 +1,5 @@
 import { React, useState, useRef } from 'react';
-import { useStyles } from './UseStyles';
+import { useStyles } from '../UseStyles';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,7 +24,7 @@ export default function Header({onAdmin}) {
 		toggleIsAdmin = false;
 	} else {
 		toggleIsAdmin = true;
-	}
+	};
 
     const isMenuOpen = Boolean(anchorEl);
 
@@ -35,12 +35,11 @@ export default function Header({onAdmin}) {
 
     const handleMenuClose = () => {
         setAnchorEl(null);
- 
     };
 
     const handleRefresh = () => {
         window.location.reload()
-    }
+    };
 
     const menuId = ('primary-search-account-menu') ;
     const renderMenu = (
@@ -71,7 +70,7 @@ export default function Header({onAdmin}) {
         e.preventDefault();
 		sessionStorage.clear();
 		window.location.reload();
-    } 
+    };
 
 	async function handleAdmin(e) {
 		e.preventDefault();
@@ -89,8 +88,8 @@ export default function Header({onAdmin}) {
 			alert("Vous n'êtes pas autorisés à resté sur cette page");
 				sessionStorage.removeItem('admin');
 				window.location.reload();
-		}
-	}
+		};
+	};
 
 	async function handleSupAccount (e) {
 		if (window.confirm("Vous voulez vraiment supprimer votre compte ?") ) {
@@ -113,8 +112,8 @@ export default function Header({onAdmin}) {
 				}
 		} else {
 			return;
-		}
-	}
+		};
+	};
 
 
     return (

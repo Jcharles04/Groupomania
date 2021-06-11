@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useStyles } from './UseStyles';
+import { useStyles } from '../UseStyles';
 import fetchAuth from '../../auth/authUtil';
 
 import Paper from '@material-ui/core/Paper';
@@ -46,24 +46,24 @@ export default function PostCard({onAddCom}){
         }
         setImg(true);
         setLoading(false);
-    }
+    };
 
     return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
-                    <Grid container  >
+                    <Grid container >
                         <Grid item>
                             <div className={classes.image}>
-                                    <img className="previewImg" alt="" src="" hidden={img} style={{width: 180}}/>
+                                <img className="previewImg" alt="" src="" hidden={img} style={{width: 180}}/>
                             </div>
                         </Grid>
                         <Grid item xs={10} sm container justify="space-around">
                             <Grid item xs container direction="column" spacing={1}>
                                 <Grid item xs={9}>
                                     <Typography gutterBottom variant="subtitle1">
-                                    <label htmlFor="text"></label>
-                                    <Input fullWidth multiline rows={4} type="text" id="text" className="text" name='text'  minLength="0" maxLength="250" size="25" placeholder="Racontez nous votre journée..." value={text} onChange={e => setText(e.target.value)}/>
+                                        <label htmlFor="text"></label>
+                                        <Input fullWidth multiline rows={4} type="text" id="text" className="text" name='text'  minLength="0" maxLength="250" size="25" placeholder="Racontez nous votre journée..." value={text} onChange={e => setText(e.target.value)}/>
                                     </Typography>
                                 </Grid>
                             </Grid>

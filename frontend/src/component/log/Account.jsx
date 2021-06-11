@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import Login from './Login';
-import Signin from './Signin'
+import Signin from './Signin';
 
 export default function Account ({onAccountLoggedIn}) {
     
@@ -14,25 +14,25 @@ export default function Account ({onAccountLoggedIn}) {
     } else {
         console.log("Chose Signin");
         content = <Signin onSwitch={onSwitch}/>
-    }
+    };
 
     function handleLoggedIn(token) {
         if (onAccountLoggedIn) {
             onAccountLoggedIn(token);
         }
-    }
+    };
 
     function onSwitch() {
         if(page === 'Login'){
             setPage('Signin');
         } else {
-            setPage('Login')
+            setPage('Login');
         }
-    }
+    };
 
     return (
         <> 
             {content}
         </>
-    )
+    );
 }

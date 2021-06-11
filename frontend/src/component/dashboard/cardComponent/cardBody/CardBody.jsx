@@ -1,6 +1,6 @@
 import {React, useState , useRef, useEffect} from 'react';
 import CardBodyShow from './CardBodyShow';
-import { useStyles } from '../../UseStyles';
+import { useStyles } from '../../../UseStyles';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';

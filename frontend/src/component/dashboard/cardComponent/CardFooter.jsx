@@ -1,6 +1,6 @@
 import {React, useState} from 'react';
 import fetchAuth from '../../../auth/authUtil';
-import { useStyles } from '../UseStyles';
+import { useStyles } from '../../UseStyles';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -82,6 +82,6 @@ export default function CardFooter({myLike, likes, id, ReplyTo_id, setResponse, 
                 : null
             } 
         </CardActions>
-    )   
+    ); 
 }
 

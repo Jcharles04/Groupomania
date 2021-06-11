@@ -1,6 +1,6 @@
 import {React, useState} from "react";
 import fetchAuth from '../../../auth/authUtil';
-import { useStyles } from '../UseStyles';
+import { useStyles } from '../../UseStyles';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
@@ -80,7 +80,7 @@ export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, 
         }
         setLoading(false);
         handleMenuClose();
-    }
+    };
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -133,8 +133,8 @@ export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, 
                 />
             </Grid>
             {admin && notVerify
-                    ?<Grid item xs  className={classes.serv} ><WarningIcon/></Grid>
-                    : null
+                ?<Grid item xs  className={classes.serv} ><WarningIcon/></Grid>
+                : null
             }
             <Grid item xs>
                 <CardHeader
@@ -150,6 +150,6 @@ export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, 
                 {renderMenu}
             </Grid>
         </Grid>
-    )
+    );
 }
 

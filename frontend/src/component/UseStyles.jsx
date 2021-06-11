@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     grow: {
         flexGrow: 1,
         margin: '0 0 5px 0',
+        minHeight: 80,
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -72,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     /* -------------------------------------------------------------------------- */
 
     root: {
-        maxWidth: 900,
+        maxWidth: 800,
         minWidth: 'auto',
         margin:'0 auto 25px auto'
     },
@@ -87,7 +88,7 @@ const useStyles = makeStyles((theme) => ({
     img: {
         margin: 'auto',
         maxWidth: '100%',
-        maxHeight: '100%',
+        maxHeight: 'auto',
     },
     post: {
         height: 'auto',

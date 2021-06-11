@@ -19,7 +19,7 @@ export default function CardList({ reloadPage}) {
         try {
             fetchAuth('http://localhost:8080/com/')
                 .then(function(response){
-                    console.log(response)
+                    console.log(response);
                     return response.json();
                 })
                 .then(function(myJson) {
@@ -34,8 +34,8 @@ export default function CardList({ reloadPage}) {
         } catch (error) {
             alert(error);
             console.log(error);
-        }
-    }
+        };
+    };
 
     useEffect(()=>{
         getAllComs()
@@ -52,7 +52,7 @@ export default function CardList({ reloadPage}) {
         const comIndex = data.findIndex(com => com.id === newCom.id);
         const dataCopy  = [...data];
         dataCopy[comIndex] = newCom;
-        setData(dataCopy)
+        setData(dataCopy);
     }
 
     function handleDeleteCom(cId){
@@ -80,7 +80,7 @@ export default function CardList({ reloadPage}) {
     function handleScroll() {
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
         setIsFetching(hasNewComs);
-    }
+    };
 
     const handleFetchMoreComs = useCallback(() => {
         try {
@@ -91,7 +91,7 @@ export default function CardList({ reloadPage}) {
                 let id = result.slice(8);
                 fetchAuth('http://localhost:8080/com/moreCom/' + id)
                     .then(function(response){
-                        console.log(response)
+                        console.log(response);
                         return response.json();
                     })
                     .then(function(myJson) {
@@ -111,7 +111,7 @@ export default function CardList({ reloadPage}) {
         } catch (error) {
             alert(error);
             console.log(error);
-        }
+        };
     }, [data, hasNewComs]);
 
     useEffect(() => {

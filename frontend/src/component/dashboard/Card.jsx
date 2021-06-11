@@ -1,5 +1,5 @@
 import {React, useState} from 'react'; 
-import { useStyles } from './UseStyles';
+import { useStyles } from '../UseStyles';
 import Card from '@material-ui/core/Card';
 import Collapse from '@material-ui/core/Collapse';
 import CardHead from "./cardComponent/CardHeader";
@@ -27,6 +27,7 @@ export default function CardComponant({
     level = 0,
     
     }) {
+        
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
 

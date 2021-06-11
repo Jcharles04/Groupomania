@@ -9,7 +9,7 @@ export default function DashBoard() {
 
     
     const [isAdmin, setIsAdmin] = useState(false);
-    const [log, setLog] = useState(false)
+    const [log, setLog] = useState(false);
 
     function handleAdmin() {
         if(isAdmin === false){
@@ -30,7 +30,7 @@ export default function DashBoard() {
                     body: JSON.stringify()
                 })
                     if(response.ok) {
-                        setLog(true)
+                        setLog(true);
                     } else {
                         alert("Vous ne vous êtes pas connecté correctement");
                             sessionStorage.clear();
@@ -42,15 +42,16 @@ export default function DashBoard() {
             }
         };
     ImLog()
-    }, [])
+    }, []);
     
 
     return (
         <div disabled={!log}>
             <Header onAdmin={handleAdmin}/>
-            {isAdmin  ? <Admin/> 
-                    : <Wall/>
+            {isAdmin  
+                ? <Admin/> 
+                : <Wall/>
             }  
         </div>
-    )
+    );
 }

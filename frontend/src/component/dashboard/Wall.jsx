@@ -8,13 +8,13 @@ export default function Wall() {
     
     function handleAddCom() {
         setReloadPage(!reloadPage)
-    } 
+    };
 
     return (
         <>
             <PostCard onAddCom={handleAddCom}/>
             <CardList reloadPage={reloadPage}/> 
         </>
-    )
+    );
         
 }
