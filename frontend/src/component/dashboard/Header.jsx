@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import fetchAuth from '../../auth/authUtil';
-
+import icon from '../../assets/groupomaniaIcon.png';
 
 export default function Header({onAdmin}) {
     const classes = useStyles();
@@ -121,9 +121,10 @@ export default function Header({onAdmin}) {
             <AppBar position="static">
                 <Toolbar>
                     <Button onClick={handleRefresh} variant="contained" color="primary" disableElevation>
-                        <Typography className={classes.title} variant="h5" noWrap>
-                        Groupomania
-                        </Typography>
+                        <img className={classes.logo} src={icon} alt="Logo" />
+                        {/* <Typography className={classes.title} variant="h5" noWrap>
+                            Groupomania
+                        </Typography> */}
                     </Button> 
                     <div className={classes.grow}/>
                     <Typography className={classes.hello} variant="h5" noWrap>

@@ -1,19 +1,19 @@
 import {useState} from 'react';
 import Login from './Login';
-import Signin from './Signin';
+import Signup from './Signup';
 
 export default function Account ({onAccountLoggedIn}) {
     
     const [page, setPage] = useState('Login');
 
     let content = null;
-    console.log("Choose Login/signin");
+    console.log("Choose Login/signup");
     if (page === 'Login') {
         console.log("Chose Login");
         content = <Login onLoggedIn={handleLoggedIn} onSwitch={onSwitch}/>
     } else {
-        console.log("Chose Signin");
-        content = <Signin onSwitch={onSwitch}/>
+        console.log("Chose Signup");
+        content = <Signup onSwitch={onSwitch}/>
     };
 
     function handleLoggedIn(token) {
@@ -24,7 +24,7 @@ export default function Account ({onAccountLoggedIn}) {
 
     function onSwitch() {
         if(page === 'Login'){
-            setPage('Signin');
+            setPage('Signup');
         } else {
             setPage('Login');
         }

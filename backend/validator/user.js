@@ -8,6 +8,7 @@ export default  async function validateUser (req, res, next) {
 
     await body('mail')
     .isEmail()
+    .contains('@groupomania.fr')
     .run(req);
 
     await body('name')

@@ -7,7 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from '../UseStyles';
 import Container from '@material-ui/core/Container';
+import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 
 /* -------------------------------------------------------------------------- */
@@ -15,7 +18,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 /* -------------------------------------------------------------------------- */
 
 
-export default function Signin({onSwitch}) {
+export default function Signup({onSwitch}) {
     const classes = useStyles();
     const [name, setName] = useState('');
     const [firstname, setFirstname] = useState('');
@@ -30,7 +33,7 @@ export default function Signin({onSwitch}) {
         setLoading(true);
         setError('');
         try {
-            const response = await fetch('http://localhost:8080/user/signin', {
+            const response = await fetch('http://localhost:8080/user/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -101,20 +104,26 @@ export default function Signin({onSwitch}) {
                                 onChange={e => setName(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="Service"
-                                label="Service"
-                                type="text"
-                                id="text"
-                                autoComplete="current-service"
-                                value={service} 
-                                onChange={e => setService(e.target.value)}
-                            />
-                            <FormHelperText>Commercial, Comptabilité, Communication, ...</FormHelperText>
+                        <Grid item xs={12} >
+                            <FormControl variant="outlined" className={classes.formControl} required>
+                                <InputLabel htmlFor="outlined-age-native-simple" >Service</InputLabel>
+                                <Select
+                                    native
+                                    value={service}
+                                    onChange={e => setService(e.target.value)}
+                                    label="Service"
+                                    inputProps={{
+                                        name: 'Service',
+                                        id: 'outlined-age-native-simple',
+                                    }}
+                                >
+                                <option aria-label="None" value="" />
+                                <option value="Commercial">Commercial</option>
+                                <option value="Comptabilité">Comptabilité</option>
+                                <option value="Communication">Communication</option>
+                                <option value="Ressources Humaines">Ressources Humaines</option>
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
@@ -122,7 +131,7 @@ export default function Signin({onSwitch}) {
                                 required
                                 fullWidth
                                 id="email"
-                                label="Adresse Mail"
+                                label="Adresse Mail Professionnelle"
                                 name="email"
                                 autoComplete="email"
                                 value={mail} 

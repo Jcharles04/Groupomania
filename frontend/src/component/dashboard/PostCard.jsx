@@ -58,7 +58,9 @@ export default function PostCard({onAddCom}){
                                 <img className="previewImg" alt="" src="" hidden={img} style={{width: 180}}/>
                             </div>
                         </Grid>
-                        <Grid item xs={10} sm container justify="space-around">
+                        <Grid item xs={11} sm container justify="space-around">
+                            <Grid item xs={1} className={classes.invisible}>
+                            </Grid>
                             <Grid item xs container direction="column" spacing={1}>
                                 <Grid item xs={9}>
                                     <Typography gutterBottom variant="subtitle1">
@@ -69,8 +71,8 @@ export default function PostCard({onAddCom}){
                             </Grid>
                     
                             <Grid item xs={1} container direction="column"  justify="space-around" >
-                                <Button forhtml="file" variant="contained" color='primary' component="label"><AttachFileIcon/>
-                                    <input hidden type="file" name="file" className='upload'  accept="image/*" 
+                                <Button forhtml="file" variant="contained" color='primary' component="label" title='fileButton' name="Ajouter fichier"><AttachFileIcon/>
+                                    <input hidden type="file" name="file"  className='upload'  accept="image/*" 
                                         onChange={(event) => {
                                             setFile(event.target.files[0]);
                                             let preview = event.target.form.querySelector('.previewImg');
@@ -82,7 +84,7 @@ export default function PostCard({onAddCom}){
                                         }}
                                     />
                                 </Button>
-                                <Button type="submit" id="submit" className='button' value="Envoyer" variant="contained" color="primary" disabled={loading}><SendIcon/></Button>
+                                <Button type="submit" id="submit" className='button' value="Envoyer" variant="contained" title='sendButton' color="primary" disabled={loading}><SendIcon/></Button>
                             </Grid>
                             <Grid item xs={1} className={classes.invisible}>
                             </Grid>

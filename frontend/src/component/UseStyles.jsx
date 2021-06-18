@@ -2,10 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
 
+    
     /* -------------------------------------------------------------------------- */
     /*                               LOGIN / SIGNIN                               */
     /* -------------------------------------------------------------------------- */
-
     bg: {
         marginTop: theme.spacing(8),
         display: 'flex',
@@ -22,6 +22,12 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
+    },
+    formControl: {
+        width: "100%",
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
     },
 
     /* -------------------------------------------------------------------------- */
@@ -44,6 +50,10 @@ const useStyles = makeStyles((theme) => ({
     },
     menuButton: {
         marginRight: theme.spacing(2),
+    },
+    logo: {
+        maxHeight: 32,
+        width: 'auto',
     },
     title: {
         display: 'flex',

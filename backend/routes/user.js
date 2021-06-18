@@ -7,7 +7,7 @@ import validateUser from "../validator/user.js";
 
 export function route() {
     const router = express.Router();
-    router.post("/signin", validateUser, userCtrl.signup);
+    router.post("/signup", validateUser, userCtrl.signup);
     router.post("/login", userCtrl.login);
     router.post("/ImLog", auth, userCtrl.ImLog);
     router.post("/del", auth, userCtrl.deleteUser);
