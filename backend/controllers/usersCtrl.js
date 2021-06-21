@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import * as db from '../database/Db.js';
 import jwt from 'jsonwebtoken';
 import MaskData from'maskdata';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export function signup(req, res, next) {
     try {
@@ -63,7 +65,7 @@ export async function login(req, res, next) {
                     userId: userId, name: userName, admin: admin,
                     access_token: jwt.sign(
                         { id: userId, isModerator: admin }, //TODO: mettre le bon .env
-                        'JWT_SECRET_TOKEN',
+                        process.env.WT,
                         { expiresIn: '24h' }
                 )};
                 res.status(200).json(obj);

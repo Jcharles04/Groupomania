@@ -1,5 +1,7 @@
 import Sequelize from 'sequelize';
 const QueryTypes = Sequelize.QueryTypes;
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 let sequelize;
 
@@ -11,10 +13,15 @@ export async function init() {
     if (sequelize)
         return;
     try {
-        sequelize = new Sequelize('groupomania', 'root', 'root', {
+        sequelize = new Sequelize(
+            process.env.DB_HOST,
+            process.env.DB_USER,
+            process.env.DB_PASS,
+            {
             dialect: "mysql",
             host: "localhost"
-        });
+            }
+        );
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
     } catch (err) {

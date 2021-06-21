@@ -2,6 +2,8 @@ import * as db from '../database/Db.js';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const staticImagesPath = path.join(path.dirname(import.meta.url), "images").replace(/^file:[\\/]+/g, '');
 
@@ -9,7 +11,7 @@ export async function createCom(req, res, next){
     
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const userId = decodedToken.id;
         let image = '';
             
@@ -35,7 +37,7 @@ export async function replyCom(req, res, next){
     
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const userId = decodedToken.id; 
         const text = req.body.text;
         const replyTo_id = req.body.ReplyTo_id
@@ -63,7 +65,7 @@ export async function deleteCom(req, res, next){
     
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const userId = decodedToken.id;
 
         const pId = req.body.parent_id;
@@ -97,7 +99,7 @@ export async function likeCom(req, res, next){
     
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const userId = decodedToken.id;
         
         const user = req.body.user;
@@ -150,7 +152,7 @@ export async function modCom(req, res, next) {
 
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const userId = decodedToken.id;
 
         const pId = req.body.parent_id;
@@ -192,11 +194,52 @@ export async function modCom(req, res, next) {
 
 };
         
+export async function getAllComs(req, res, next) {
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, process.env.WT);
+        const userId = decodedToken.id;
+        
+        db.getAllComs(userId)
+        .then(coms => res.status(200).json(coms))
+        .catch(error => res.status(400).json({ error }))
+        console.log(res); 
+
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export async function getMoreComs(req, res, next) {
+
+    try {
+        const token = req.headers.authorization.split(' ')[1];
+        const decodedToken = jwt.verify(token, process.env.WT);
+        const userId = decodedToken.id;
+
+        const cId = req.params.id;
+        
+        db.getMoreComs(userId, cId)
+        .then(coms => res.status(200).json(coms))
+        .catch(error => res.status(400).json({ error }))
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+    console.log(res); 
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                    ADMIN                                   */
+/* -------------------------------------------------------------------------- */
+
 export async function checkCom(req, res, next) {
 
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const admin = decodedToken.isModerator;
         const uId = decodedToken.id;
 
@@ -218,7 +261,7 @@ export async function delOldComs(req, res, next) {
     try {
 
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const admin = decodedToken.isModerator;
         const array = req.body;
         
@@ -249,49 +292,11 @@ export async function delOldComs(req, res, next) {
     }
 };
 
-
-export async function getAllComs(req, res, next) {
-    try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
-        const userId = decodedToken.id;
-        
-        db.getAllComs(userId)
-        .then(coms => res.status(200).json(coms))
-        .catch(error => res.status(400).json({ error }))
-        console.log(res); 
-
-    } catch(error) {
-        console.error(error);
-        res.status(500).json({ error: error.message });
-    }
-};
-
-export async function getMoreComs(req, res, next) {
-
-    try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
-        const userId = decodedToken.id;
-
-        const cId = req.params.id;
-        
-        db.getMoreComs(userId, cId)
-        .then(coms => res.status(200).json(coms))
-        .catch(error => res.status(400).json({ error }))
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: error.message });
-    }
-    console.log(res); 
-};
-
 export async function getOldComs(req, res, next) {
 
     try {
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const admin = decodedToken.isModerator;
 
         if(admin){
@@ -313,7 +318,7 @@ export async function getOldComs(req, res, next) {
 export async function getOldReplies(req, res, next) {
     try{
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+        const decodedToken = jwt.verify(token, process.env.WT);
         const admin = decodedToken.isModerator;
         const array = req.body;
 
