@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt';
 import * as db from '../database/Db.js';
 import jwt from 'jsonwebtoken';
-import MaskData from'maskdata';
+import MaskData from 'maskdata';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 export function signup(req, res, next) {
     try {
-        const mail = req.body.mail
+        let mail = req.body.mail
         bcrypt.hash(req.body.password, 10)
         .then( hash => {
             db.getUser(mail)
@@ -17,10 +17,10 @@ export function signup(req, res, next) {
                         req.body.name,
                         req.body.firstname,
                         req.body.service,
-                        mail,
+                        req.body.mail,
                         hash
-                )
-                res.status(201).json({ message: 'Utilisateur créé !' })
+                    )
+                    return res.status(201).json({ message: 'Utilisateur créé !' });
                 } else {
                     return res.status(401).json({ error: 'Email déjà utilisé !' });
                 }
@@ -31,8 +31,6 @@ export function signup(req, res, next) {
                     res.status(500).json({ error: error.message });
                 }
             );
-            
-            console.log(user)
         })
         .catch(error => res.status(500).json({ error }));
     } catch(error) {
@@ -64,7 +62,7 @@ export async function login(req, res, next) {
                 const obj = {
                     userId: userId, name: userName, admin: admin,
                     access_token: jwt.sign(
-                        { id: userId, isModerator: admin }, //TODO: mettre le bon .env
+                        { id: userId, isModerator: admin },
                         process.env.WT,
                         { expiresIn: '24h' }
                 )};

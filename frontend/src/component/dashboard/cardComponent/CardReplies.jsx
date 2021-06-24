@@ -40,7 +40,6 @@ export default function CardReplies({
             if(response.ok) {
                 const json = await response.json();
                 console.log(json);
-                alert('Réponse envoyée !');
                 onModify(json);
                 setReply('');
             } else {
