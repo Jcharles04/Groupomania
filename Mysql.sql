@@ -1,6 +1,6 @@
 /*
-SQLyog Community v13.1.7 (64 bit)
-MySQL - 8.0.23 : Database - groupomania
+SQLyog Community v13.1.6 (64 bit)
+MySQL - 8.0.24 : Database - groupomania
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 8.0.23 : Database - groupomania
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`groupomania` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`groupomania` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `groupomania`;
 
@@ -34,7 +34,7 @@ CREATE TABLE `comments` (
   KEY `fk_Commentaire_Commentaire1_idx` (`ReplyTo_id`),
   CONSTRAINT `fk_Commentaire_Commentaire1` FOREIGN KEY (`ReplyTo_id`) REFERENCES `comments` (`id`),
   CONSTRAINT `fk_Commentaire_User` FOREIGN KEY (`User_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=293 DEFAULT CHARSET=utf8mb3;
 
 /*Data for the table `comments` */
 
@@ -187,7 +187,11 @@ insert  into `comments`(`id`,`User_id`,`CreationDate`,`ImgUrl`,`Text`,`Suppressi
 (285,56,'2021-06-02 14:11:52','2CV-Special-jaune-cedrat-2.jpg1622643112585.jpg','\"; DELETE FROM User','2021-06-02 15:50:30',NULL,1),
 (286,56,'2021-06-02 14:12:34','2CV-Special-jaune-cedrat-2.jpg1622643154906.jpg','<script>alert(\'hello\')</script>','2021-06-02 15:50:35',NULL,1),
 (287,56,'2021-06-02 14:13:07','2CV-Special-jaune-cedrat-2.jpg1622643187709.jpg','<a href=\"javascript:alert(\'hello\')\">clique</a>','2021-06-02 15:50:39',NULL,1),
-(288,56,'2021-06-03 09:24:48',NULL,'Wouah !',NULL,261,NULL);
+(288,56,'2021-06-03 09:24:48',NULL,'Wouah !',NULL,261,NULL),
+(289,56,'2021-06-11 09:42:52',NULL,'az','2021-06-11 13:35:12',261,NULL),
+(290,56,'2021-06-11 16:28:20','','Juste du texte',NULL,NULL,NULL),
+(291,66,'2021-06-24 14:01:45',NULL,'az','2021-06-24 14:09:07',234,NULL),
+(292,66,'2021-06-24 14:09:01',NULL,'az','2021-06-24 14:09:04',234,NULL);
 
 /*Table structure for table `like_number` */
 
@@ -229,7 +233,7 @@ insert  into `like_number`(`ComId`,`UserId`) values
 DROP TABLE IF EXISTS `parameters`;
 
 CREATE TABLE `parameters` (
-  `param_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `param_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `param_value` json DEFAULT NULL,
   PRIMARY KEY (`param_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -255,7 +259,7 @@ CREATE TABLE `user` (
   `CreationDate` datetime DEFAULT CURRENT_TIMESTAMP,
   `Suppression` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb3;
 
 /*Data for the table `user` */
 
@@ -268,8 +272,8 @@ insert  into `user`(`id`,`Name`,`FirstName`,`Service`,`Mail`,`PassWord`,`Moderat
 (51,'Charles','Julien','Stagiaire','toto@tata.com','$2y$10$lUbMbjuen86dq7fxGLQbnOGkt0mF25WlWjW5zy0gsE/Jpb17JgdVW',1,'2021-04-23 16:12:34','2021-04-14 14:18:28',NULL),
 (52,'GIBAND','Julien','Direction','julien.giband@ahpc-services.com','$2y$10$X8mz.dH4YDH3EuBYicXtFuMTADtOkjISUe8j/UAUeBDuhFuW5MkhG',0,NULL,'2021-04-15 15:12:56','2021-04-20 14:34:44'),
 (56,'Charles','Julien','Stagiaire','toto@toto.com','$2b$10$4Sqfor38FGNoF7gTcK2lNePwURJk8yUl/b7xdpd2QGxFRsCQYgvVS',1,'2021-06-03 08:08:13','2021-04-27 07:33:36',NULL),
-(60,'Blanchar','Bernard','Comm','bernard@bernard.com','$2b$10$7cwv3ASQuIiGr1G3J3KUl.e2Ws5tg486a6kbocgkil.iyeoTMFW7.',0,NULL,'2021-05-19 09:54:11','2021-05-19 10:54:13'),
-(61,'b','b','b','toto@toto.com','$2b$10$S3DoKx0hzSFxGLs8r4rIlOB4wpxY8EB1NjOZpH9M2i4tfjhibuKJm',0,NULL,'2021-05-28 09:17:28','2021-05-28 09:40:01');
+(64,'Charles','Julien','Informatique','j.charles@groupomania.fr','$2b$10$2kg955vqsFKAyIHf9pLPR.bJZTtjtE4.wt4Iwdu6MLZJTaps2cMXe',0,NULL,'2021-06-23 17:02:13',NULL),
+(66,'Dupont','Théo','Ressources Humaines','admin@groupomania.fr','$2b$10$SP9h6NveHvnzUHLICj18yuk.YHpF9m8byAEsufbGEu.oHC8zJY/yq',0,NULL,'2021-06-24 14:00:52',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
