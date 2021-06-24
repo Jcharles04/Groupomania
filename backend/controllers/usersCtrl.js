@@ -107,7 +107,7 @@ export function ImAdmin(req, res, next) {
 export function deleteUser(req, res, next) {
 
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+    const decodedToken = jwt.verify(token, process.env.WT);
     const userId = decodedToken.id;
 
     try {
@@ -127,7 +127,7 @@ export function deleteUser(req, res, next) {
 
 export async function getAllUsers(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+    const decodedToken = jwt.verify(token, process.env.WT);
     const admin = decodedToken.isModerator;
     const emailMask2Options = {
         maskWith: "*", 
@@ -161,7 +161,7 @@ export async function getAllUsers(req, res, next) {
 
 export function modifyUser(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+    const decodedToken = jwt.verify(token, process.env.WT);
     const admin = decodedToken.isModerator;
 
     const uId = req.body.uId;
@@ -185,7 +185,7 @@ export function modifyUser(req, res, next) {
 
 export function backUser(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+    const decodedToken = jwt.verify(token, process.env.WT);
     const admin = decodedToken.isModerator;
 
     const uId = req.body.uId;
@@ -208,7 +208,7 @@ export function backUser(req, res, next) {
 
 export function moderationDate(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'JWT_SECRET_TOKEN');
+    const decodedToken = jwt.verify(token, process.env.WT);
     const admin = decodedToken.isModerator;
 
     if(admin){

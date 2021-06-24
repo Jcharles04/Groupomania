@@ -17,6 +17,12 @@ export default function Users({
     let date = new Date(Suppression);
     let newDate = date.toLocaleString();
 
+    function handleOnModify() {
+        if(onModify){
+            onModify();
+        }
+    }
+
     async function handleDeleteUser(e) {
         e.preventDefault();
         const uId = e.target.value;
@@ -31,7 +37,7 @@ export default function Users({
         if(response.ok) {
             const json = await response.json();
             console.log(json);
-            onModify();
+            handleOnModify();
             alert('Utilisateur modifié !');
         } else {
             console.log('erreur serveur %s', response.status, response.statusText);
@@ -53,7 +59,7 @@ export default function Users({
         if(response.ok) {
             const json = await response.json();
             console.log(json);
-            onModify();
+            handleOnModify();
             alert('Utilisateur modifié !');
         } else {
             console.log('erreur serveur %s', response.status, response.statusText);
@@ -76,7 +82,7 @@ export default function Users({
                 :<>
                     <TableCell><Button onClick={handleDeleteUser} variant="contained" value={id} align="center">X</Button></TableCell>
                     <TableCell align="center">/</TableCell>
-                 </>
+                </>
              }
         </TableRow> 
         // <tr>

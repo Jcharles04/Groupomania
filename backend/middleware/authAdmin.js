@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export default function authAdmin(req, res, next) {
     try {
