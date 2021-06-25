@@ -1,4 +1,5 @@
 Groupomania
+
 Bienvenue sur le dernier projet de mon parcours sur OpenClassRoom
 
 Pour la bonne utilisation de ce projet, téléchargez le dossier, l’ouvrir dans votre éditeur de code.
