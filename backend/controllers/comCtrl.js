@@ -5,7 +5,7 @@ import path from 'path';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const staticImagesPath = path.join(path.dirname(import.meta.url), "images").replace(/^file:[\\/]+/g, '');
+const staticImagesPath = path.join(path.dirname(import.meta.url), "images/").replace(/^file:[\\/]+/g, '');
 
 export async function createCom(req, res, next){
     
@@ -272,15 +272,17 @@ export async function delOldComs(req, res, next) {
                 array.unshift(replies[n].id);
                 n++
             }
-            for (const id of array) {
+            for (let id of array) {
                 const url = await db.findOldCom(id);
-                const com = await db.deleteOldCom(id);
                 if (url) {
                     fs.unlink(staticImagesPath + url ,(err) => {
-                        if (err) throw err;
+                        if (err){
+                            throw err;
+                        } 
                         console.log('Fichier supprimé !');
                     });
                 }
+                const com = await db.deleteOldCom(id);         
             }
             res.status(200).json({JSON});
         } else {

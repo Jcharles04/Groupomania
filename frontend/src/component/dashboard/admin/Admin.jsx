@@ -73,7 +73,10 @@ export default function Zadmin() {
     },[]);
 
     function handleModify() {
-        getAllUsers()
+        if(getAllUsers){
+            console.log('là')
+            getAllUsers();
+        }
     }
 
     async function handleCheckCom(e){
@@ -127,7 +130,7 @@ export default function Zadmin() {
                                     Service={user.Service}
                                     Mail={user.Mail}
                                     Suppression={user.Suppression}
-                                    onModify={user.handleModify}  
+                                    onModify={handleModify}  
                                 />
                             )
                         })}

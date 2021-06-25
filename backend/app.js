@@ -16,7 +16,7 @@ db.init();
 app.use(helmet());
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000,
-    max: 200,
+    max: 1000,
     message: 'Too many requests. Wait for a while before attempting again'
 });
 

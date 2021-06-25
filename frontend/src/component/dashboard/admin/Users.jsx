@@ -25,8 +25,7 @@ export default function Users({
 
     async function handleDeleteUser(e) {
         e.preventDefault();
-        const uId = e.target.value;
-        console.log(uId);
+        const uId = e.currentTarget.value;
         const response = await fetchAuth('http://localhost:8080/user/sup', {
             method: 'POST',
             headers: {
@@ -38,7 +37,7 @@ export default function Users({
             const json = await response.json();
             console.log(json);
             handleOnModify();
-            alert('Utilisateur modifié !');
+            console.log('Utilisateur supprimé !');
         } else {
             console.log('erreur serveur %s', response.status, response.statusText);
             alert("Erreur sur le serveur");
@@ -47,8 +46,7 @@ export default function Users({
 
     async function handleBackUser(e) {
         e.preventDefault();
-        const uId = e.target.value;
-        console.log(uId);
+        const uId = e.currentTarget.value;
         const response = await fetchAuth('http://localhost:8080/user/back', {
             method: 'POST',
             headers: {
@@ -60,7 +58,7 @@ export default function Users({
             const json = await response.json();
             console.log(json);
             handleOnModify();
-            alert('Utilisateur modifié !');
+            console.log('Utilisateur revenu !');
         } else {
             console.log('erreur serveur %s', response.status, response.statusText);
             alert("Erreur sur le serveur");
