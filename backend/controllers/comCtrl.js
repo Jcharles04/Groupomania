@@ -5,7 +5,7 @@ import path from 'path';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const staticImagesPath = path.join(path.dirname(import.meta.url), "images/").replace(/^file:[\\/]+/g, '');
+const staticImagesPath = path.join(path.dirname(import.meta.url), "../images/").replace(/^file:[\\/]+/g, '');
 
 export async function createCom(req, res, next){
     
