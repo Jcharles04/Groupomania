@@ -163,10 +163,32 @@ export async function modCom(req, res, next) {
 
         if (sup == 1) {
             image = null;
+            const url = await db.findImgCom(
+                comId
+            )
+            if (url) {
+                await fs.unlink(staticImagesPath + url ,(err) => {
+                    if (err){
+                        throw err;
+                    } 
+                    console.log('Fichier supprimé !' + url);
+                });
+            }
         } else {
             if (!req.file) {
             image = false;
             } else {
+                const url = await db.findImgCom(
+                    comId
+                )
+                if (url) {
+                    await fs.unlink(staticImagesPath + url ,(err) => {
+                        if (err){
+                            throw err;
+                        } 
+                        console.log('Fichier supprimé !' + url);
+                    });
+                }
                 image = req.file.filename;
             }
         }
@@ -191,8 +213,16 @@ export async function modCom(req, res, next) {
         res.status(500).json({ error: error.message });
     }
     console.log(res); 
-
 };
+/*
+if (url) {
+    fs.unlink(staticImagesPath + url ,(err) => {
+        if (err){
+            throw err;
+        } 
+        console.log('Fichier supprimé !');
+    });
+}*/
         
 export async function getAllComs(req, res, next) {
     try {
@@ -273,7 +303,7 @@ export async function delOldComs(req, res, next) {
                 n++
             }
             for (let id of array) {
-                const url = await db.findOldCom(id);
+                const url = await db.findImgCom(id);
                 if (url) {
                     fs.unlink(staticImagesPath + url ,(err) => {
                         if (err){

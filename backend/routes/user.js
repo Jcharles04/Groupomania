@@ -10,10 +10,11 @@ export function route() {
     router.post("/signup", validateUser, userCtrl.signup);
     router.post("/login", userCtrl.login);
     router.post("/ImLog", auth, userCtrl.ImLog);
-    router.post("/del", auth, userCtrl.deleteUser);
+    router.post("/del", auth, userCtrl.disableUser);
 
     router.post("/ImAdmin", authAdmin, userCtrl.ImAdmin);
     router.post("/sup", authAdmin, userCtrl.modifyUser);
+    router.post("/defsup", authAdmin, userCtrl.deleteUser);
     router.post("/back", authAdmin, userCtrl.backUser);
     router.get("/all", authAdmin, userCtrl.getAllUsers);
     router.get("/modDate", authAdmin, userCtrl.moderationDate);

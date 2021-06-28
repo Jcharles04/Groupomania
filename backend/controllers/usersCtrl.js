@@ -103,14 +103,14 @@ export function ImAdmin(req, res, next) {
 };
 
 
-export function deleteUser(req, res, next) {
+export function disableUser(req, res, next) {
 
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.WT);
     const userId = decodedToken.id;
 
     try {
-        db.deleteUser(userId);
+        db.disableUser(userId);
 
         res.status(201).json({ message: 'Utilisateur supprimé' });
     } catch(error) {
@@ -119,6 +119,8 @@ export function deleteUser(req, res, next) {
     }
     console.log(res); 
 };
+
+
 
 /* -------------------------------------------------------------------------- */
 /*                                    ADMIN                                   */
@@ -168,6 +170,27 @@ export async function modifyUser(req, res, next) {
     if(admin){
         try {
             const user = await db.modifyUser(uId)
+            res.status(201).json({ message: 'Utilisateur supprimé' });
+
+        } catch(error) {
+            console.error(error);
+            res.status(500).json({ error: error.message });
+        }
+    } else {
+        res.status(400).json({ error: `can't do this` });
+    }
+}
+
+export async function deleteUser(req, res, next) {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.WT);
+    const admin = decodedToken.isModerator;
+
+    const uId = req.body.uId;
+
+    if(admin){
+        try {
+            const user = await db.deleteUser(uId)
             res.status(201).json({ message: 'Utilisateur supprimé' });
 
         } catch(error) {

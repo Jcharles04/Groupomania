@@ -22,7 +22,6 @@ export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, 
     let user = sessionStorage.id;
     user = parseInt(user);
     const isMyCom = (user === User_id);
-    console.log(FirstName + ' : ' + delU);
     const userState = (delU != null) ? "Utilisateur supprimé" : FirstName;
     
     const notVerify = checkedByAdmin === null;

@@ -77,7 +77,7 @@ export async function createUser(name, firstname, serv, mail, password) {
     }
 }
 
-export async function deleteUser(id) {
+export async function disableUser(id) {
     const t = await sequelize.transaction();
 
     try {
@@ -159,6 +159,50 @@ export async function backUser(uId) {
         await t.rollback();
         throw error;
 
+    }
+}
+
+export async function deleteUser(id) {
+    const t = await sequelize.transaction();
+
+    try {
+        let com = await sequelize.query("SELECT * FROM comments WHERE User_id =?",
+            {
+                replacements: [id],
+                type: QueryTypes.SELECT,
+                transaction: t
+            });
+        
+        async function delReplies() {
+            com.forEach(async el => {
+                await sequelize.query(`DELETE FROM comments WHERE ReplyTo_id= ${el.id} `,
+                {
+                    type: QueryTypes.DELETE,
+                    transaction: t
+                });
+            });
+        }
+        await delReplies();
+
+        await sequelize.query("DELETE FROM comments WHERE User_id = ?",
+            {
+                replacements: [id],
+                type: QueryTypes.DELETE,
+                transaction: t
+            });
+
+        await sequelize.query("DELETE FROM user WHERE id =?",
+            {
+                replacements: [id],
+                type: QueryTypes.DELETE,
+                transaction: t
+            });
+
+        await t.commit();
+        
+    } catch (error) {
+        await t.rollback();
+        throw error;
     }
 }
 
@@ -255,7 +299,7 @@ export async function getOldReplies(id){
     }
 };
 
-export async function findOldCom(id){
+export async function findImgCom(id){
     const t = await sequelize.transaction();
 
     try {
@@ -367,6 +411,12 @@ export async function deleteCom(cId) {
                 type: QueryTypes.UPDATE,
                 transaction: t
             });
+        await sequelize.query("UPDATE comments SET Suppression = NOW()  WHERE ReplyTo_id = ?",
+        {
+            replacements: [cId],
+            type: QueryTypes.UPDATE,
+            transaction: t
+        });
         await t.commit();
         return res[0];
 
@@ -425,7 +475,7 @@ export async function getAllComs(userId) {
         SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
         LEFT JOIN like_number l ON l.ComId = c.id
         LEFT JOIN USER u ON u.id= c.User_id
-        WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL
+        WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL AND u.Suppression IS NULL
         ) et
         GROUP BY et.id
         ORDER BY CreationDate DESC LIMIT 10`,
@@ -444,7 +494,7 @@ export async function getAllComs(userId) {
                 SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
                 LEFT JOIN like_number l ON l.ComId = c.id
                 LEFT JOIN USER u ON u.id= c.User_id
-                WHERE c.Suppression IS NULL AND ReplyTo_id = ${comment.id}
+                WHERE c.Suppression IS NULL AND ReplyTo_id = ${comment.id} AND u.Suppression IS NULL
                 ) et
                 GROUP BY et.id
                 ORDER BY CreationDate DESC`,
@@ -477,7 +527,7 @@ export async function getMoreComs(userId, id) {
         SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
         LEFT JOIN like_number l ON l.ComId = c.id
         LEFT JOIN USER u ON u.id= c.User_id
-        WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL  AND c.id < :cId
+        WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL  AND c.id < :cId AND u.Suppression IS NULL
         ) et
         GROUP BY et.id
         ORDER BY CreationDate DESC LIMIT 10`,
@@ -496,7 +546,7 @@ export async function getMoreComs(userId, id) {
                 SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
                 LEFT JOIN like_number l ON l.ComId = c.id
                 LEFT JOIN USER u ON u.id= c.User_id
-                WHERE c.Suppression IS NULL AND ReplyTo_id = ${comment.id}
+                WHERE c.Suppression IS NULL AND ReplyTo_id = ${comment.id} AND u.Suppression IS NULL
                 ) et
                 GROUP BY et.id
                 ORDER BY CreationDate DESC`,
@@ -529,7 +579,7 @@ export async function getOneCom(id, userId) {
         SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
         LEFT JOIN like_number l ON l.ComId = c.id
         LEFT JOIN USER u ON u.id= c.User_id
-        WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL AND c.id = :cId
+        WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL AND c.id = :cId AND u.Suppression IS NULL
         ) et`,
 
         {
@@ -546,7 +596,7 @@ export async function getOneCom(id, userId) {
                 SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
                 LEFT JOIN like_number l ON l.ComId = c.id
                 LEFT JOIN USER u ON u.id= c.User_id
-                WHERE c.Suppression IS NULL AND ReplyTo_id = :cId
+                WHERE c.Suppression IS NULL AND ReplyTo_id = :cId AND u.Suppression IS NULL
                 ) et
                 GROUP BY et.id
                 ORDER BY CreationDate DESC`,
@@ -567,9 +617,7 @@ export async function getOneCom(id, userId) {
     } catch (error) {
         await t.rollback();
         throw error;
-
     }
-    
 }
 
 export async function modCom(user_id, text, image, comId, sup) {
@@ -609,10 +657,7 @@ export async function modCom(user_id, text, image, comId, sup) {
     }  
 }
 
-    
-
-
-
+/*
 export async function supImg(image, comId) {
     const t = await sequelize.transaction();
 
@@ -631,4 +676,4 @@ export async function supImg(image, comId) {
         throw error;
   
     }
-}
+}*/

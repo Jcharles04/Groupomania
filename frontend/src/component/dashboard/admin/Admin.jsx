@@ -116,8 +116,9 @@ export default function Zadmin() {
                             <TableCell align="center">Prénom</TableCell>
                             <TableCell align="center">Email</TableCell>
                             <TableCell align="center">Service</TableCell>
+                            <TableCell align="center">Désactiver compte</TableCell>
                             <TableCell align="center">Suppression</TableCell>
-                            <TableCell align="center">Date Suppression</TableCell>
+                            <TableCell align="center">Date Désactivation</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
