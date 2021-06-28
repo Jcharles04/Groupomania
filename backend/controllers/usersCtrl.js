@@ -67,7 +67,6 @@ export async function login(req, res, next) {
                         { expiresIn: '24h' }
                 )};
                 res.status(200).json(obj);
-
             })
             .catch(
                 error => {
@@ -159,7 +158,7 @@ export async function getAllUsers(req, res, next) {
     }
 }
 
-export function modifyUser(req, res, next) {
+export async function modifyUser(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.WT);
     const admin = decodedToken.isModerator;
@@ -168,22 +167,20 @@ export function modifyUser(req, res, next) {
 
     if(admin){
         try {
-            db.modifyUser(uId)
-            
+            const user = await db.modifyUser(uId)
             res.status(201).json({ message: 'Utilisateur supprimé' });
 
         } catch(error) {
             console.error(error);
             res.status(500).json({ error: error.message });
         }
-        console.log(res);
     } else {
         res.status(400).json({ error: `can't do this` });
     }
 }
 
 
-export function backUser(req, res, next) {
+export async function backUser(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.WT);
     const admin = decodedToken.isModerator;
@@ -192,7 +189,7 @@ export function backUser(req, res, next) {
 
     if(admin){
         try {
-            db.backUser(uId)
+            const user = await db.backUser(uId)
             
             res.status(201).json({ message: 'Utilisateur modifié' });
 
@@ -200,7 +197,6 @@ export function backUser(req, res, next) {
             console.error(error);
             res.status(500).json({ error: error.message });
         }
-        console.log(res);
     } else {
         res.status(400).json({ error: `can't touch users` });
     }

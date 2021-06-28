@@ -11,14 +11,11 @@ export default function App() {
     const classes = useStyles();
     const {token, setToken } = useToken();
 
-    console.log("Read token: ", token);
 
     let display;
     if (token) {
-        console.log('Chose DashBoard');
         display = <DashBoard/>;
     } else {
-        console.log('Chose Account');
         display = <Account onAccountLoggedIn={handleAccountLoggedIn}/>;
     };
 
@@ -29,7 +26,6 @@ export default function App() {
     );
 
     function handleAccountLoggedIn(token) {
-        console.log("Logged in with token", token);
         setToken(token);
     };
 }

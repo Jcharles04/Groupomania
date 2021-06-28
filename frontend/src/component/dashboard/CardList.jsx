@@ -136,7 +136,8 @@ export default function CardList({ reloadPage}) {
                     ReplyTo_id,
                     Service,
                     Text,
-                    User_id
+                    User_id,
+                    delU
                     })=>
                     
                     <CardComponant 
@@ -154,6 +155,7 @@ export default function CardList({ reloadPage}) {
                         Service={Service}
                         Text={Text}
                         User_id={User_id}
+                        delU={delU}
                         Reload={handleReloadCom}
                         DeleteCom={handleDeleteCom}
                     />

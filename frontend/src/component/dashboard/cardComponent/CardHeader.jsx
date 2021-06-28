@@ -16,12 +16,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 
 
-export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, FirstName, Service, User_id, onModClicked, onModify, onDeleteCom}) {
+export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, FirstName, Service, User_id, delU, onModClicked, onModify, onDeleteCom}) {
 
     const admin = sessionStorage.admin === '1';
     let user = sessionStorage.id;
     user = parseInt(user);
     const isMyCom = (user === User_id);
+    console.log(FirstName + ' : ' + delU);
+    const userState = (delU != null) ? "Utilisateur supprimé" : FirstName;
+    
     const notVerify = checkedByAdmin === null;
     const [loading, setLoading] = useState(false);
 
@@ -65,10 +68,8 @@ export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, 
                 console.log(json);
                 if(ReplyTo_id) {
                     onModify(json);
-                    alert('Commentaire supprimé !');
                 } else {
                     onDeleteCom(cId);
-                    alert('Commentaire supprimé !');
                 }
                 
             } else {
@@ -121,7 +122,8 @@ export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, 
                     avatar={
                         <Avatar aria-label="Profil picture" className={classes.avatar}></Avatar>
                     }
-                    title={FirstName}
+                    
+                    title= {userState}
                     subheader={newDate}
                 />
             </Grid>

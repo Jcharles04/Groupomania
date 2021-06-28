@@ -22,6 +22,7 @@ export default function CardComponant({
     Service,
     Text,
     User_id,
+    delU,
     Reload,
     DeleteCom,
     level = 0,
@@ -62,7 +63,7 @@ export default function CardComponant({
     return (
         <Card className={`${classes.root}  ${"wrapper card level-"+level}`}  key={id} id={'comment-'+id} >
             <div className={classes.MainCard}>
-                <CardHead id={id} checkedByAdmin={checkedByAdmin} CreationDate={CreationDate} ReplyTo_id={ReplyTo_id} FirstName={FirstName} Service={Service} User_id={User_id} onModify={handleReload} onModClicked={handleShow} onDeleteCom={handleDeleteCom}/>
+                <CardHead id={id} checkedByAdmin={checkedByAdmin} CreationDate={CreationDate} ReplyTo_id={ReplyTo_id} FirstName={FirstName} Service={Service} User_id={User_id} delU={delU} onModify={handleReload} onModClicked={handleShow} onDeleteCom={handleDeleteCom}/>
                 <CardBody id={id} Text={Text} ImgUrl={ImgUrl} editing={editing} ReplyTo_id={ReplyTo_id} onModify={handleReload} level={level}/>
                 <CardFooter aria-expanded={expanded} myLike={myLike} likes={likes} id={id} ReplyTo_id={ReplyTo_id} nbOfResponse={nbOfResponse} replies={replies} onReply={handleExpandClick} onModify={handleReload}  setResponse={handleExpandClick}/>
             </div>
@@ -80,6 +81,7 @@ export default function CardComponant({
                     Service={Service}
                     Text={Text}
                     User_id={User_id}
+                    delU={delU}
                     onModify={handleReload}
                     onDeleteCom={handleDeleteCom}
                 />

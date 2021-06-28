@@ -14,12 +14,12 @@ export async function init() {
         return;
     try {
         sequelize = new Sequelize(
-            process.env.DB_HOST,
+            process.env.DB_NAME,
             process.env.DB_USER,
             process.env.DB_PASS,
             {
             dialect: "mysql",
-            host: "localhost"
+            host: process.env.DB_HOST,
             }
         );
         await sequelize.authenticate();
@@ -422,7 +422,7 @@ export async function getAllComs(userId) {
 
     try {
         let comments = await sequelize.query(`SELECT et.*, COUNT(UserId) likes, MAX(UserId = :uId ) AS myLike FROM (
-        SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service FROM comments c
+        SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
         LEFT JOIN like_number l ON l.ComId = c.id
         LEFT JOIN USER u ON u.id= c.User_id
         WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL
@@ -441,7 +441,7 @@ export async function getAllComs(userId) {
             
             
             let replies = await sequelize.query(`SELECT et.*, COUNT(UserId) likes, MAX(UserId = :uId ) AS myLike FROM (
-                SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service FROM comments c
+                SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
                 LEFT JOIN like_number l ON l.ComId = c.id
                 LEFT JOIN USER u ON u.id= c.User_id
                 WHERE c.Suppression IS NULL AND ReplyTo_id = ${comment.id}
@@ -474,7 +474,7 @@ export async function getMoreComs(userId, id) {
 
     try {
         let comments = await sequelize.query(`SELECT et.*, COUNT(UserId) likes, MAX(UserId = :uId ) AS myLike FROM (
-        SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service FROM comments c
+        SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
         LEFT JOIN like_number l ON l.ComId = c.id
         LEFT JOIN USER u ON u.id= c.User_id
         WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL  AND c.id < :cId
@@ -493,7 +493,7 @@ export async function getMoreComs(userId, id) {
             
             
             let replies = await sequelize.query(`SELECT et.*, COUNT(UserId) likes, MAX(UserId = :uId ) AS myLike FROM (
-                SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service FROM comments c
+                SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
                 LEFT JOIN like_number l ON l.ComId = c.id
                 LEFT JOIN USER u ON u.id= c.User_id
                 WHERE c.Suppression IS NULL AND ReplyTo_id = ${comment.id}
@@ -526,7 +526,7 @@ export async function getOneCom(id, userId) {
 
     try {
         let comments = await sequelize.query(`SELECT et.*, COUNT(UserId) likes, MAX(UserId = :uId ) AS myLike FROM (
-        SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service FROM comments c
+        SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
         LEFT JOIN like_number l ON l.ComId = c.id
         LEFT JOIN USER u ON u.id= c.User_id
         WHERE c.Suppression IS NULL AND ReplyTo_id IS NULL AND c.id = :cId
@@ -543,7 +543,7 @@ export async function getOneCom(id, userId) {
             
             
             let replies = await sequelize.query(`SELECT et.*, COUNT(UserId) likes, MAX(UserId = :uId ) AS myLike FROM (
-                SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service FROM comments c
+                SELECT c.id, c.User_id, c.CreationDate, c.ImgUrl, c.Text, c.Suppression, c.ReplyTo_id, c.checkedByAdmin, l.UserId, u.FirstName, u.Service, u.Suppression delU FROM comments c
                 LEFT JOIN like_number l ON l.ComId = c.id
                 LEFT JOIN USER u ON u.id= c.User_id
                 WHERE c.Suppression IS NULL AND ReplyTo_id = :cId

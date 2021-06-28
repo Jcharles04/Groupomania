@@ -22,6 +22,7 @@ export default function Zadmin() {
     
 
     function getAllUsers() {
+        console.log('toto');
         try {
             fetchAuth('http://localhost:8080/user/all')
                 .then(function(response){

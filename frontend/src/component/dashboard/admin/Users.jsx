@@ -35,7 +35,7 @@ export default function Users({
         });
         if(response.ok) {
             const json = await response.json();
-            console.log(json);
+            console.log('json :',json);
             handleOnModify();
             console.log('Utilisateur supprimé !');
         } else {

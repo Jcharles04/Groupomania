@@ -35,7 +35,6 @@ export default function PostCard({onAddCom}){
             if(response.ok) {
                 const json = await response.json();
                 console.log(json);
-                alert('Commentaire envoyé !');
                 onAddCom();
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);

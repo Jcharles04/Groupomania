@@ -32,7 +32,6 @@ export default function CardBodyShow({Text, ImgUrl, id, ReplyTo_id, onModifyCom,
             if(response.ok) {
                 const json = await response.json();
                 console.log(json);
-                alert('Modification apportée !');
                 onModifyCom(json);
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);
