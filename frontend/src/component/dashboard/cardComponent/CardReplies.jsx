@@ -39,7 +39,6 @@ export default function CardReplies({
             });
             if(response.ok) {
                 const json = await response.json();
-                console.log(json);
                 onModify(json);
                 setReply('');
             } else {

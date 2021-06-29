@@ -41,11 +41,8 @@ export default function Signup({onSwitch}) {
                 body: JSON.stringify({name: name, firstname: firstname, service: service, mail: mail, password: password})
             });
             if (response.ok){
-                const json = await response.json();
-                console.log(json);
                 alert('Compte créé');
                 window.location.reload();
-                //return; //Quit function to avoid changing state when <Login> isn't shown anymore
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);
                 setError('Mail déjà utilisé ou Mot de passe incorrect (8 à 15 caractères, au moins 1 chiffre, au moins 1 caractère spécial)');

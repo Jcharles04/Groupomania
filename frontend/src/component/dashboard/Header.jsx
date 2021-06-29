@@ -82,7 +82,6 @@ export default function Header({onAdmin}) {
 			body: JSON.stringify()
 		})
 		if(response.ok) {
-			console.log(response);
 			onAdmin();
 		} else {
 			alert("Vous n'êtes pas autorisés à resté sur cette page");

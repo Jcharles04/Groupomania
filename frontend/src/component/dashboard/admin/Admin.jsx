@@ -26,11 +26,9 @@ export default function Zadmin() {
         try {
             fetchAuth('http://localhost:8080/user/all')
                 .then(function(response){
-                    console.log(response)
                     return response.json();
                 })
                 .then(function(myJson) {
-                    console.log(myJson);
                     setData(myJson)
                 })
                 .catch(error => {                                                  
@@ -47,11 +45,9 @@ export default function Zadmin() {
         try {
             fetchAuth('http://localhost:8080/user/modDate')
                 .then(function(response){
-                    console.log(response)
                     return response.json();
                 })
                 .then(function(myJson) {
-                    console.log(myJson);
                     setUser(myJson)
                 })
                 .catch(error => {                                                  
@@ -75,7 +71,6 @@ export default function Zadmin() {
 
     function handleModify() {
         if(getAllUsers){
-            console.log('là')
             getAllUsers();
         }
     }
@@ -86,8 +81,6 @@ export default function Zadmin() {
             method: 'POST'
         });
         if(response.ok) {
-            const json = await response.json();
-            console.log(json);
             handleModify()
             alert('Commentaires validés !');
         } else {

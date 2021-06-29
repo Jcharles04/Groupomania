@@ -22,7 +22,6 @@ export default function Login({onLoggedIn , onSwitch}) {
     const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
-        console.log("Login handleSubmit");
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -35,9 +34,7 @@ export default function Login({onLoggedIn , onSwitch}) {
                 body: JSON.stringify({mail: mail, password: password})
             })
             if(response.ok) {
-                console.log(response)
                 const json = await response.json();        
-                console.log(json);
                 if (json?.access_token && onLoggedIn) {
                     onLoggedIn(json?.access_token);
                     sessionStorage.setItem('name', json?.name);
@@ -63,8 +60,6 @@ export default function Login({onLoggedIn , onSwitch}) {
     function handleOnClick() {
         onSwitch();
     };
-    
-    console.log("Login render");
 
     return (
         <Container component="main" maxWidth="sm">

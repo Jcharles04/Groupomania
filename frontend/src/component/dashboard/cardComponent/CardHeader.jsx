@@ -64,7 +64,6 @@ export default function CardHead({id, checkedByAdmin, ReplyTo_id, CreationDate, 
             });
             if(response.ok) {
                 const json = await response.json();
-                console.log(json);
                 if(ReplyTo_id) {
                     onModify(json);
                 } else {

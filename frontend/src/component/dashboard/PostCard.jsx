@@ -26,15 +26,11 @@ export default function PostCard({onAddCom}){
             const formData = new FormData();
             formData.append('text', text);
             formData.append('image', file);
-            console.log(formData);
-            console.log(text);
             const response = await fetchAuth('http://localhost:8080/com/', {
                 method: 'POST',
                 body: formData
             });
             if(response.ok) {
-                const json = await response.json();
-                console.log(json);
                 setFile('');
                 setText('');
                 onAddCom();

@@ -19,11 +19,9 @@ export default function CardList({ reloadPage}) {
         try {
             fetchAuth('http://localhost:8080/com/')
                 .then(function(response){
-                    console.log(response);
                     return response.json();
                 })
                 .then(function(myJson) {
-                    console.log(myJson);
                     setData(myJson)
                     setHasNewComs(true)
                 })
@@ -56,10 +54,8 @@ export default function CardList({ reloadPage}) {
     }
 
     function handleDeleteCom(cId){
-        console.log(cId);
         cId = parseInt(cId);
         const comIndex = data.findIndex(com => com.id === cId);
-        console.log(comIndex);
         const dataCopy  = [...data];
         dataCopy.splice(comIndex, 1);
         setData(dataCopy);
@@ -91,11 +87,9 @@ export default function CardList({ reloadPage}) {
                 let id = result.slice(8);
                 fetchAuth('http://localhost:8080/com/moreCom/' + id)
                     .then(function(response){
-                        console.log(response);
                         return response.json();
                     })
                     .then(function(myJson) {
-                        console.log(myJson);
                         if(myJson.length > 0) {
                             const newData = [...data, ...myJson]
                             setData(newData);

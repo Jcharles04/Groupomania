@@ -10,12 +10,23 @@ Coté backend, lancez la commande “nodemon server” pour lancer le back, cot�
 La base de donné est à votre disposition dans le dossier “Mysql.sql”, il vous suffira de faire un import dans votre outil de gestion Mysql.
 
 Dans votre cd backend, créez un fichier “.env” et faites un copier/coller des lignes suivantes :
-DB_HOST=groupomania
-DB_USER= <username>
-DB_PASS= <password>
+DB_NAME=groupomania
+DB_HOST=localhost
+DB_USER= “votreUserName”
+DB_PASS= “votreassWord”
 WT=123456
 
 Enfin vous pouvez utilisez l’application en temps qu’utilisateur simple avec …@groupomania.fr , ou utiliser les identifiant suivant en temps qu’admin (mail: admin@groupomania.fr , mdp: admin!123).
 
 Bon visionnage
+
+<——————————————————————————————————————>
+
+Edit Post Soutenance
+
+Correction au niveau des suppressions effectuée. Pour supprimer un user de façon definitive, il suffit de se rendre sur la page admin avec un compte admin et d’appuyer sur supprimer sur un user qui est désactivé.
+
+Les commentaires des users désactivés ne sont plus visible sur la page principale.
+
+Divers autres petites corrections mineurs
  

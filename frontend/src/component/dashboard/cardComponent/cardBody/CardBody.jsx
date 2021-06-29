@@ -35,7 +35,6 @@ export default function CardBody({id, Text, ImgUrl, editing, onModify, ReplyTo_i
     }
     
     function handleImageChange(data) {
-        console.log(data);
         setMod(false)
         let newData = URL.createObjectURL(data);
         setImg(newData);

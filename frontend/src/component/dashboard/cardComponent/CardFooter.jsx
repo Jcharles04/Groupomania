@@ -34,9 +34,7 @@ export default function CardFooter({myLike, likes, id, ReplyTo_id, setResponse, 
             });
             if(response.ok) {
                 const json = await response.json();
-                console.log(json);
                 onModify(json);
-                console.log('Like pris en compte');
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);
                 alert("Erreur sur le serveur");

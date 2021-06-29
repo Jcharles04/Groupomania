@@ -23,7 +23,6 @@ export default function CardBodyShow({Text, ImgUrl, id, ReplyTo_id, onModifyCom,
         }
         formData.append('id', id);
         formData.append('value', value );
-        console.log(formData);
         try {
             const response = await fetchAuth('http://localhost:8080/com/mod', {
                 method: 'POST',
@@ -31,7 +30,6 @@ export default function CardBodyShow({Text, ImgUrl, id, ReplyTo_id, onModifyCom,
             });
             if(response.ok) {
                 const json = await response.json();
-                console.log(json);
                 onModifyCom(json);
             } else {
                 console.log('erreur serveur %s', response.status, response.statusText);
