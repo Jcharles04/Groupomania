@@ -177,12 +177,21 @@ export async function deleteUser(id) {
             com.forEach(async el => {
                 await sequelize.query(`DELETE FROM comments WHERE ReplyTo_id= ${el.id} `,
                 {
+                    replacements: [id],
                     type: QueryTypes.DELETE,
                     transaction: t
                 });
             });
         }
         await delReplies();
+
+        await sequelize.query("DELETE FROM like_number WHERE UserId = ?",
+            {
+                replacements: [id],
+                type: QueryTypes.DELETE,
+                transaction: t
+            });
+
 
         await sequelize.query("DELETE FROM comments WHERE User_id = ?",
             {
