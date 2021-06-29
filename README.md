@@ -13,7 +13,7 @@ Dans votre cd backend, créez un fichier “.env” et faites un copier/coller d
 DB_NAME=groupomania
 DB_HOST=localhost
 DB_USER= “votreUserName”
-DB_PASS= “votreassWord”
+DB_PASS= “votrePassWord”
 WT=123456
 
 Enfin vous pouvez utilisez l’application en temps qu’utilisateur simple avec …@groupomania.fr , ou utiliser les identifiant suivant en temps qu’admin (mail: admin@groupomania.fr , mdp: admin!123).
